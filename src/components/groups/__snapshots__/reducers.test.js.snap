@@ -1,0 +1,226 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`reducers group add 1`] = `
+Object {
+  "list": Array [
+    Object {
+      "count": 0,
+      "id": 1,
+      "name": "helou",
+    },
+  ],
+  "search": "",
+  "selected_group_id": null,
+  "todos_by_group_id": Object {
+    "1": Array [],
+  },
+}
+`;
+
+exports[`reducers group close 1`] = `
+Object {
+  "list": Array [],
+  "search": "",
+  "selected_group_id": null,
+  "todos_by_group_id": Object {},
+}
+`;
+
+exports[`reducers group delete 1`] = `
+Object {
+  "list": Array [
+    Object {
+      "count": 0,
+      "id": 2,
+      "name": "helou 2",
+    },
+  ],
+  "search": "",
+  "selected_group_id": null,
+  "todos_by_group_id": Object {
+    "2": Array [],
+  },
+}
+`;
+
+exports[`reducers group edit 1`] = `
+Object {
+  "list": Array [
+    Object {
+      "count": 0,
+      "id": 1,
+      "name": "helouedited",
+    },
+  ],
+  "search": "",
+  "selected_group_id": null,
+  "todos_by_group_id": Object {
+    "1": Array [],
+  },
+}
+`;
+
+exports[`reducers group search 1`] = `
+Object {
+  "list": Array [
+    Object {
+      "count": 0,
+      "id": 1,
+      "name": "helou",
+    },
+    Object {
+      "count": 0,
+      "id": 2,
+      "name": "helou are you there?",
+    },
+  ],
+  "search": "you",
+  "selected_group_id": null,
+  "todos_by_group_id": Object {
+    "1": Array [],
+    "2": Array [],
+  },
+}
+`;
+
+exports[`reducers group select 1`] = `
+Object {
+  "list": Array [
+    Object {
+      "count": 0,
+      "id": 1,
+      "name": "helou",
+    },
+  ],
+  "search": "",
+  "selected_group_id": 1,
+  "todos_by_group_id": Object {
+    "1": Array [],
+  },
+}
+`;
+
+exports[`reducers todo add 1`] = `
+Object {
+  "list": Array [
+    Object {
+      "count": 1,
+      "id": 1,
+      "name": "nr 1",
+    },
+    Object {
+      "count": 2,
+      "id": 2,
+      "name": "nr 2",
+    },
+  ],
+  "search": "",
+  "selected_group_id": 1,
+  "todos_by_group_id": Object {
+    "1": Array [
+      Object {
+        "id": 1,
+        "name": "helou",
+        "parent_id": 1,
+      },
+    ],
+    "2": Array [
+      Object {
+        "id": 1,
+        "name": "helou",
+        "parent_id": 2,
+      },
+      Object {
+        "id": 2,
+        "name": "helou 2",
+        "parent_id": 2,
+      },
+    ],
+  },
+}
+`;
+
+exports[`reducers todo delete 1`] = `
+Object {
+  "list": Array [
+    Object {
+      "count": 2,
+      "id": 1,
+      "name": "nr 1",
+    },
+    Object {
+      "count": 2,
+      "id": 2,
+      "name": "nr 2",
+    },
+  ],
+  "search": "",
+  "selected_group_id": 1,
+  "todos_by_group_id": Object {
+    "1": Array [
+      Object {
+        "id": 2,
+        "name": "helou 2",
+        "parent_id": 1,
+      },
+      Object {
+        "id": 3,
+        "name": "helou 3",
+        "parent_id": 1,
+      },
+    ],
+    "2": Array [
+      Object {
+        "id": 1,
+        "name": "helou",
+        "parent_id": 2,
+      },
+      Object {
+        "id": 2,
+        "name": "helou 2",
+        "parent_id": 2,
+      },
+    ],
+  },
+}
+`;
+
+exports[`reducers todo edit 1`] = `
+Object {
+  "list": Array [
+    Object {
+      "count": 1,
+      "id": 1,
+      "name": "nr 1",
+    },
+    Object {
+      "count": 2,
+      "id": 2,
+      "name": "nr 2",
+    },
+  ],
+  "search": "",
+  "selected_group_id": 1,
+  "todos_by_group_id": Object {
+    "1": Array [
+      Object {
+        "id": 1,
+        "name": "edited",
+        "parent_id": 1,
+      },
+    ],
+    "2": Array [
+      Object {
+        "id": 1,
+        "name": "helou",
+        "parent_id": 2,
+      },
+      Object {
+        "id": 2,
+        "name": "helou 2",
+        "parent_id": 2,
+      },
+    ],
+  },
+}
+`;

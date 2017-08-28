@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getVisibleGroups filter by text  1`] = `
+Array [
+  Object {
+    "count": 4,
+    "name": "List n. 1",
+  },
+  Object {
+    "count": 1,
+    "name": "List n. 2",
+  },
+]
+`;
+
+exports[`getVisibleTodos filter by status and text and group id 1`] = `
+Array [
+  Object {
+    "group_id": 1,
+    "id": 1,
+    "name": "bob the",
+    "status": 1,
+  },
+]
+`;
