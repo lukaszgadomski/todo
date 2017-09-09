@@ -1,160 +1,136 @@
 import initialState, { filterTodoType } from "../../initialStore";
 import { types } from "./actions";
-import { getSelectedTodosSelector, getSelectedGroupId } from "../selectors";
+
+import add from "ramda/src/add";
 import evolve from "ramda/src/evolve";
+import always from "ramda/src/always";
 import append from "ramda/src/append";
+import map from "ramda/src/map";
+import curry from "ramda/src/curry";
+import filter from "ramda/src/filter";
+import assoc from "ramda/src/assoc";
+import cond from "ramda/src/cond";
+import propEq from "ramda/src/propEq";
+import T from "ramda/src/T";
+import dissoc from "ramda/src/dissoc";
 
-export const getMaxId = list => field => {
+export const getMaxId = curry((field, list) => {
   return list.reduce((maxId, item) => Math.max(item[field], maxId), 0) + 1;
+});
+
+const editById = curry((id, fn) =>
+  map(
+    cond([
+      [propEq("id", id), fn],
+      [T, item => item] //return original item if cond returns false
+    ])
+  )
+);
+
+const appendWithId = data => list => {
+  if (data === undefined) {
+    throw new Error("data undefined");
+  }
+  if (list === undefined) {
+    throw new Error("empty list");
+  }
+  return append(assoc("id", getMaxId("id", list), data), list);
 };
-
-export const mutateByFunc = old => fn => {
-  return fn(old);
-};
-
-export const mutatePropByKey = oldObj => propValue => key => {
-  return {
-    ...oldObj,
-    [key]: propValue
-  };
-};
-
-export const refreshPropByKey = oldObj => propValue => key => {
-  return {
-    ...oldObj,
-    [key]: propValue
-  };
-};
-
-export const prop = key => obj => {
-  return obj[key];
-};
-
-/*
-const state = {todos: {1 : [1,2,3, 5 , 6], 2: [1]}}
-const appender = R.append(4)
-const mutateState = R.curry((key, fn, data) => {
-  return R.evolve({
-    todos: {
-     [key] : fn
-    }})(data)
-})
-
-const got = mutateState(1, R.filter(a => a % 2), state);
-*/
 
 export default (state = initialState.groups, action) => {
-  let newTodos = null;
   let groupId = null;
 
   switch (action.type) {
     case types.ADD_GROUP:
-      const id = getMaxId(state.list)("id");
-      return {
-        ...state,
-        list: [
-          ...state.list,
-          {
-            id: id,
-            name: action.text,
-            count: 0
-          }
-        ],
-        todos_by_group_id: mutatePropByKey(state.todos_by_group_id)([])(id)
-      };
+      const id = getMaxId("id", state.list);
+      return evolve({
+        list: append({
+          id: id,
+          name: action.text,
+          count: 0
+        }),
+        todos_by_group_id: assoc(id, [])
+      })(state);
     case types.EDIT_GROUP:
-      return {
-        ...state,
-        list: state.list.map(
-          item =>
-            item.id === action.id ? { ...item, name: action.text } : item
-        )
-      };
+      return evolve({
+        list: editById(action.id, assoc("name", action.text))
+      })(state);
     case types.DELETE_GROUP:
-      return {
-        ...state,
-        list: state.list.filter(item => item.id !== action.id),
-        todos_by_group_id: mutateByFunc(
-          state.todos_by_group_id
-        )(todosByGroupId => {
-          const ret = { ...todosByGroupId };
-          delete ret[action.id];
-          return ret;
-        })
-      };
+      return evolve({
+        list: filter(item => item.id !== action.id),
+        todos_by_group_id: dissoc(action.id)
+      })(state);
     case types.SEARCH_GROUP:
-      return {
-        ...state,
-        search: action.text ? action.text : ""
-      };
+      return evolve({
+        search: always(action.text)
+      })(state);
     case types.SELECT_GROUP:
-      return {
-        ...state,
-        selected_group_id: action.id
-      };
+      return evolve({
+        visible: always(false),
+        selected_group_id: always(action.id)
+      })(state);
     case types.CLOSE_GROUP:
-      return {
-        ...state,
-        selected_group_id: null
-      };
-
+      return evolve({
+        visible: always(true),
+        selected_group_id: always(null)
+      })(state);
     case types.ADD_TODO:
       groupId = state.selected_group_id;
-      newTodos = mutateByFunc(
-        getSelectedTodosSelector({ groups: state })
-      )(todos => {
-        return [
-          ...todos,
-          {
-            id: getMaxId(todos)("id"),
-            parent_id: groupId,
-            name: action.text
-          }
-        ];
-      });
-      return {
-        ...state,
-        list: state.list.map(
-          item =>
-            item.id === groupId ? { ...item, count: item.count + 1 } : item
+      return evolve({
+        list: editById(
+          groupId,
+          evolve({
+            count: add(1)
+          })
         ),
-        todos_by_group_id: mutatePropByKey(state.todos_by_group_id)(newTodos)(
-          groupId
-        )
-      };
+        todos_by_group_id: evolve({
+          [groupId]: appendWithId({
+            parent_id: groupId,
+            name: action.text,
+            state: filterTodoType.ACTIVE
+          })
+        })
+      })(state);
     case types.EDIT_TODO:
       groupId = state.selected_group_id;
-      newTodos = mutateByFunc(
-        getSelectedTodosSelector({ groups: state })
-      )(todos => {
-        return todos.map(
-          item =>
-            item.id === action.id ? { ...item, name: action.text } : item
-        );
-      });
-      return {
-        ...state,
-        todos_by_group_id: mutatePropByKey(state.todos_by_group_id)(newTodos)(
-          groupId
-        )
-      };
+      return evolve({
+        todos_by_group_id: evolve({
+          [groupId]: editById(action.id, assoc("name", action.text))
+        })
+      })(state);
+    case types.COMPLETE_TODO:
+      groupId = state.selected_group_id;
+      return evolve({
+        todos_by_group_id: evolve({
+          [groupId]: editById(
+            action.id,
+            cond([
+              [
+                propEq("state", filterTodoType.COMPLETED),
+                assoc("state", filterTodoType.ACTIVE)
+              ],
+              [
+                propEq("state", filterTodoType.ACTIVE),
+                assoc("state", filterTodoType.COMPLETED)
+              ],
+              [T, s => s] //return original item if cond returns false
+            ])
+          )
+        })
+      })(state);
     case types.DELETE_TODO:
       groupId = state.selected_group_id;
-      newTodos = mutateByFunc(
-        getSelectedTodosSelector({ groups: state })
-      )(todos => {
-        return todos.filter(item => item.id !== action.id);
-      });
-      return {
-        ...state,
-        list: state.list.map(
-          item =>
-            item.id === groupId ? { ...item, count: item.count - 1 } : item
+      return evolve({
+        list: editById(
+          groupId,
+          evolve({
+            count: add(-1)
+          })
         ),
-        todos_by_group_id: mutatePropByKey(state.todos_by_group_id)(newTodos)(
-          groupId
-        )
-      };
+        todos_by_group_id: evolve({
+          [groupId]: filter(item => item.id !== action.id)
+        })
+      })(state);
     default:
       return state;
   }

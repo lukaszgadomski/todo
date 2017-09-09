@@ -1,0 +1,16 @@
+.avatar {
+  background: #c8c8c8;
+  color: #ffffff;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  align-items: center;
+  user-select: none;
+  border-radius: 50%;
+  justify-content: center;
+}

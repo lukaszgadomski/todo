@@ -17,7 +17,7 @@ export const searchPredicate = search => field => item => {
   if (!search || !search.length) {
     return true;
   }
-  return item[field].indexOf(search) != -1;
+  return item[field].indexOf(search) !== -1;
 };
 
 // export const filterTypePredicate = filter => ;
@@ -35,10 +35,10 @@ export const getVisibleTodos = createSelector(
   getTodosSearch,
   (todos, filterType, searchText) => {
     if (todos == null) {
-      return null;
+      return [];
     }
     //simply return todos if filters are empty
-    if (filterType === filterTodoType.All && searchText == "") {
+    if (filterType === filterTodoType.All && searchText === "") {
       return todos;
     }
     const search = searchPredicate(searchText)("name");
@@ -57,14 +57,9 @@ export const getVisibleGroups = createSelector(
   getSelectedTodosSelector,
   getGroupsSearch,
   (groups, todos, searchText) => {
-    if (searchText == "") {
+    if (searchText === "") {
       return groups;
     }
-    return groups.filter(
-      searchPredicate(searchText)("name")
-    ) /*.map(group => ({
-      ...group,
-      count: todos[group.id].length
-    }))*/;
+    return groups.filter(searchPredicate(searchText)("name"));
   }
 );

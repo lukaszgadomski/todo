@@ -14,6 +14,7 @@ Object {
   "todos_by_group_id": Object {
     "1": Array [],
   },
+  "visible": true,
 }
 `;
 
@@ -23,6 +24,7 @@ Object {
   "search": "",
   "selected_group_id": null,
   "todos_by_group_id": Object {},
+  "visible": true,
 }
 `;
 
@@ -40,6 +42,7 @@ Object {
   "todos_by_group_id": Object {
     "2": Array [],
   },
+  "visible": true,
 }
 `;
 
@@ -57,6 +60,7 @@ Object {
   "todos_by_group_id": Object {
     "1": Array [],
   },
+  "visible": true,
 }
 `;
 
@@ -80,6 +84,7 @@ Object {
     "1": Array [],
     "2": Array [],
   },
+  "visible": true,
 }
 `;
 
@@ -97,6 +102,7 @@ Object {
   "todos_by_group_id": Object {
     "1": Array [],
   },
+  "visible": false,
 }
 `;
 
@@ -122,6 +128,7 @@ Object {
         "id": 1,
         "name": "helou",
         "parent_id": 1,
+        "state": "active",
       },
     ],
     "2": Array [
@@ -129,14 +136,17 @@ Object {
         "id": 1,
         "name": "helou",
         "parent_id": 2,
+        "state": "active",
       },
       Object {
         "id": 2,
         "name": "helou 2",
         "parent_id": 2,
+        "state": "active",
       },
     ],
   },
+  "visible": false,
 }
 `;
 
@@ -162,11 +172,13 @@ Object {
         "id": 2,
         "name": "helou 2",
         "parent_id": 1,
+        "state": "active",
       },
       Object {
         "id": 3,
         "name": "helou 3",
         "parent_id": 1,
+        "state": "active",
       },
     ],
     "2": Array [
@@ -174,14 +186,17 @@ Object {
         "id": 1,
         "name": "helou",
         "parent_id": 2,
+        "state": "active",
       },
       Object {
         "id": 2,
         "name": "helou 2",
         "parent_id": 2,
+        "state": "active",
       },
     ],
   },
+  "visible": false,
 }
 `;
 
@@ -207,6 +222,7 @@ Object {
         "id": 1,
         "name": "edited",
         "parent_id": 1,
+        "state": "active",
       },
     ],
     "2": Array [
@@ -214,13 +230,16 @@ Object {
         "id": 1,
         "name": "helou",
         "parent_id": 2,
+        "state": "active",
       },
       Object {
         "id": 2,
         "name": "helou 2",
         "parent_id": 2,
+        "state": "active",
       },
     ],
   },
+  "visible": false,
 }
 `;

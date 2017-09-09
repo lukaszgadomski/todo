@@ -1,17 +1,13 @@
 export const types = {
-
-};
-export const types = {
   SEARCH_TODO: "SEARCH_TODO",
   CHANGE_FILTER_TODO: "CHANGE_FILTER_TODO"
 };
 
-export const searchGroup = text => ({
-  type: types.SEARCH_GROUP,
+export const searchTodo = text => ({
+  type: types.SEARCH_TODO,
   text
 });
-export const changeFilterTodo = filter_type => ({
+export const filterTodo = filter => ({
   type: types.CHANGE_FILTER_TODO,
-  filter_type
+  filter
 });
-

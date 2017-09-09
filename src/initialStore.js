@@ -1,7 +1,7 @@
 export const filterTodoType = {
-  ALL: 0,
-  ACTIVE: 1,
-  COMPLETED: 2
+  ALL: "all",
+  ACTIVE: "active",
+  COMPLETED: "completed"
 };
 
 export default {
@@ -10,7 +10,8 @@ export default {
     search: "",
     list: [],
     todos_by_group_id: {}, //list of todos for each list by group id
-    selected_group_id: null
+    selected_group_id: null,
+    visible: true
   },
   //todos component state
   todos: {

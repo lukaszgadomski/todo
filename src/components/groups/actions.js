@@ -8,6 +8,7 @@ export const types = {
 
   ADD_TODO: "ADD_TODO",
   EDIT_TODO: "EDIT_TODO",
+  COMPLETE_TODO: "COMPLETE_TODO",
   DELETE_TODO: "DELETE_TODO"
 };
 
@@ -21,19 +22,20 @@ export const searchGroup = text => ({
 export const selectGroup = id => ({ type: types.SELECT_GROUP, id });
 export const closeGroup = () => ({ type: types.CLOSE_GROUP });
 
-export const addTodo = (text, parent_id) => ({
+export const addTodo = text => ({
   type: types.ADD_TODO,
-  parent_id,
   text
 });
-export const editTodo = (id, parent_id, text) => ({
+export const editTodo = (id, text) => ({
   type: types.EDIT_TODO,
   id,
-  parent_id,
   text
 });
-export const deleteTodo = (id, parent_id) => ({
+export const completeTodo = id => ({
+  type: types.COMPLETE_TODO,
+  id
+});
+export const deleteTodo = id => ({
   type: types.DELETE_TODO,
-  id,
-  parent_id
+  id
 });

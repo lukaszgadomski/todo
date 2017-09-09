@@ -1,10 +1,12 @@
 import reducers from "./reducers";
 import * as actions from "./actions";
 import initialStore, { filterTodoType } from "../../initialStore";
+import { createSelector } from "reselect";
 
 const stringy = obj => JSON.stringify(obj, null, 4);
 
 let state = {};
+
 describe("reducers", () => {
   describe("group", () => {
     beforeEach(() => {
@@ -54,7 +56,6 @@ describe("reducers", () => {
         ...initialStore
       };
       state.groups = reducers(state.groups, actions.addGroup("nr 1"));
-
       state.groups = reducers(state.groups, actions.addGroup("nr 2"));
       state.groups = reducers(state.groups, actions.selectGroup(2));
       state.groups = reducers(state.groups, actions.addTodo("helou", 2));
@@ -69,16 +70,14 @@ describe("reducers", () => {
     test("edit", () => {
       state.groups = reducers(state.groups, actions.addTodo("helou", 1));
       expect(
-        reducers(state.groups, actions.editTodo(1, 1, "edited"))
+        reducers(state.groups, actions.editTodo(1, "edited"))
       ).toMatchSnapshot();
     });
     test("delete", () => {
       state.groups = reducers(state.groups, actions.addTodo("helou", 1));
       state.groups = reducers(state.groups, actions.addTodo("helou 2", 1));
       state.groups = reducers(state.groups, actions.addTodo("helou 3", 1));
-      expect(
-        reducers(state.groups, actions.deleteTodo(1, 1))
-      ).toMatchSnapshot();
+      expect(reducers(state.groups, actions.deleteTodo(1))).toMatchSnapshot();
     });
   });
 });

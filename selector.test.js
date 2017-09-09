@@ -1,6 +1,12 @@
 import { getVisibleTodos, getVisibleGroups } from "./selectors";
 import { filterTodoType } from "../initialStore";
 
+import evolve from "ramda/src/evolve";
+import append from "ramda/src/append";
+import map from "ramda/src/map";
+import curry from "ramda/src/curry";
+import filter from "ramda/src/filter";
+
 const stringy = obj => JSON.stringify(obj, null, 4);
 
 let state = {};
@@ -47,6 +53,14 @@ describe("getVisibleTodos", () => {
 
 describe("getVisibleGroups", () => {
   test("filter by text ", () => {
-    expect(getVisibleGroups(state)).toMatchSnapshot();
+    //expect(getVisibleGroups(state)).toMatchSnapshot();
+    getVisibleGroups(state);
+    state = evolve({
+      groups: {
+        list: append({ id: 333, name: "test", count: 0 })
+      }
+    })(state);
+    getVisibleGroups(state);
+    getVisibleGroups(state);
   });
 });

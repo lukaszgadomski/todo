@@ -1,5 +1,81 @@
+/*html {
+  box-sizing: border-box;
+}
+
+* {
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
+}*/
+
 .App {
   text-align: center;
+}
+/*.list {
+  display: flex;
+  align-content: flex-start;
+  flex-direction: column;
+}*/
+
+.list .panel-block.list-item {
+  border-top: none;
+  display: block;
+}
+
+.checbox-ball {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 2rem;
+  border: 1px solid #dbdbdb;
+  color: #dbdbdb;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.checbox-ball.completed {
+  color: #363636;
+}
+
+.hide {
+  display: none;
+}
+
+.list-item-text {
+  font-size: 1rem;
+}
+
+.list-row {
+  margin: 0.5rem 0;
+
+  flex: 0 0 100%;
+}
+
+input {
+  box-sizing: inherit;
+  height: auto;
+}
+
+.icon-badge {
+  font-size: 1.5rem;
+  color: rgb(115, 115, 115);
+}
+
+.with-icon {
+  position: relative;
+}
+.with-icon .icon {
+  position: absolute;
+  bottom: 1rem;
+  left: 0;
+}
+.with-icon input {
+  position: relative;
+  display: inline-flex;
+  justify-content: flex-start;
+  padding-left: 2.25em;
+  max-width: 100%;
+  width: 100%;
 }
 
 .App-logo {
@@ -19,6 +95,10 @@
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
