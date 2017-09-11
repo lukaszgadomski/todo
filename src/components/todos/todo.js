@@ -4,7 +4,7 @@ import Input from "../shared/input";
 import memoize from "ramda/src/memoize";
 import classnames from "classnames";
 
-export const TodoComponent = function todo({ onEdit, onSelect, name, state }) {
+export const TodoComponent = function todo({ onEdit, onSelect, onDelete, name, state }) {
   return (
     <div
       className={classnames({
@@ -30,6 +30,17 @@ export const TodoComponent = function todo({ onEdit, onSelect, name, state }) {
             <span className="list-item-text" onDoubleClick={onEdit}>
               {name}
             </span>
+          </div>
+        </div>
+        <div className="level-right">
+          <div className="level-item">
+            <p className="field">
+              <a className="button is-danger" onClick={onDelete}>
+                <span className="icon is-small">
+                  <i className="fa fa-times" />
+                </span>
+              </a>
+            </p>
           </div>
         </div>
       </div>

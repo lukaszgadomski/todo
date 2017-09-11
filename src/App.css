@@ -21,7 +21,17 @@
   display: block;
 }
 
+.border-block {
+  padding: 0.5em 0.75em;
+  max-width: none;
+  width: auto;
+  border-bottom: 1px solid #dbdbdb;
+  border-left: 1px solid #dbdbdb;
+  border-right: 1px solid #dbdbdb;
+}
+
 .checbox-ball {
+  cursor: pointer;
   width: 2rem;
   height: 2rem;
   border-radius: 2rem;
@@ -34,6 +44,7 @@
 }
 
 .checbox-ball.completed {
+  border: 1px solid #363636;
   color: #363636;
 }
 
@@ -43,6 +54,11 @@
 
 .list-item-text {
   font-size: 1rem;
+}
+
+.list-item.completed .list-item-text {
+  text-decoration: line-through;
+  color: #dbdbdb;
 }
 
 .list-row {

@@ -7,13 +7,16 @@ import List from "../shared/list";
 import classnames from "classnames";
 import * as actions from "../groups/actions";
 import * as todoActions from "./actions";
-import { getVisibleTodos } from "../selectors";
+import { getVisibleTodos, getSelectedGroup } from "../selectors";
+import Filters from "./filters";
 
 export const Todos = ({
   groupVisible,
+  group,
   onAdd,
   onSave,
   onSelect,
+  onDelete,
   onClose,
   onSearch,
   onFilter,
@@ -25,25 +28,29 @@ export const Todos = ({
       <div className="panel-heading">
         <div className="level">
           <div className="level-left">
-            <div className="level-item">Todos</div>
+            <div className="level-item">
+              <span>{group && group.name}</span>
+            </div>
           </div>
           <div className="level-right">
             <div className="level-item">
-              <a className="button is-danger" onClick={onClose}>
+              <a className="button is-primary" onClick={onClose}>
                 <span className="icon is-small">
-                  <i className="fa fa-times" />
+                  <i className="fa fa-sign-out " />
                 </span>
+                <span>Back to groups</span>
               </a>
             </div>
           </div>
         </div>
       </div>
-      <div className="panel-block">
+      <div className="border-block">
         <div className="columns">
           <div className="column is-8">
             <Input
-              placeholder={"Add list"}
+              placeholder={"Add todo"}
               onSubmit={onAdd}
+              noEmpty={true}
               clearOnSubmit={true}
             />
           </div>
@@ -56,37 +63,22 @@ export const Todos = ({
           </div>
         </div>
       </div>
-      <p className="panel-tabs">
-        <a
-          className={classnames({ "is-active": filter === filterTodoType.ALL })}
-          //onClick={onFilter(filterTodoType.ALL)}
-        >
-          all
-        </a>
-        <a
-          className={classnames({
-            "is-active": filter === filterTodoType.ACTIVE
-          })}
-          //onClick={onFilter(filterTodoType.ACTIVE)}
-        >
-          active
-        </a>
-        <a
-          className={classnames({
-            "is-active": filter === filterTodoType.COMPLETED
-          })}
-          //onClick={onFilter(filterTodoType.COMPLETED)}
-        >
-          completed
-        </a>
-      </p>
+      <Filters
+        options={Object.values(filterTodoType)}
+        selected={filter}
+        onFilter={onFilter}
+      />
       <List
         ItemComponent={TodoWithEdit({
           onSave: onSave,
-          onSelect: onSelect
+          onSelect: onSelect,
+          onDelete: onDelete
         })}
         list={list}
       />
+      {list && list.length > 0 ? (
+        <p className="help">Hint: double click on name to edit</p>
+      ) : null}
     </nav>
   );
 };
@@ -95,6 +87,7 @@ const mapStateToProps = state => {
   return {
     filter: state.todos.filter,
     groupVisible: state.groups.visible,
+    group: getSelectedGroup(state),
     list: getVisibleTodos(state)
   };
 };
@@ -109,6 +102,9 @@ const mapDispatchToProps = dispatch => {
     },
     onSelect: id => {
       dispatch(actions.completeTodo(id));
+    },
+    onDelete: id => {
+      dispatch(actions.deleteTodo(id));
     },
     onClose: () => {
       dispatch(actions.closeGroup());

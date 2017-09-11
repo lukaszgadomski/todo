@@ -1,6 +1,6 @@
 export const filterTodoType = {
   ALL: "all",
-  ACTIVE: "active",
+  ACTIVE: "incompleted",
   COMPLETED: "completed"
 };
 

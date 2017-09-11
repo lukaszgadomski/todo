@@ -11,12 +11,13 @@ export const Groups = props => {
   return (
     <nav className={classnames({ panel: true, hide: !props.visible })}>
       <p className="panel-heading">Groups</p>
-      <div className="panel-block">
+      <div className="border-block">
         <div className="columns">
           <div className="column is-8">
             <Input
               placeholder={"Add list"}
               onSubmit={props.onAdd}
+              noEmpty={true}
               clearOnSubmit={true}
             />
           </div>
@@ -37,6 +38,9 @@ export const Groups = props => {
         })}
         list={props.list}
       />
+      {props.list && props.list.length > 0 ? (
+        <p className="help">Hint: double click on name to edit</p>
+      ) : null}
     </nav>
   );
 };

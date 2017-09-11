@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import classnames from "classnames";
 
 export default class TodoTextInput extends Component {
   static propTypes = {
@@ -12,11 +13,20 @@ export default class TodoTextInput extends Component {
     clearOnSubmit: PropTypes.bool
   };
   state = {
+    error: null,
     text: this.props.text || ""
   };
   handleSubmit = e => {
     const text = e.target.value.trim();
     if (e.which === 13) {
+      if (this.props.noEmpty) {
+        if (text === "") {
+          this.setState({ error: "Empty name is not allowed" });
+          return;
+        } else {
+          this.setState({ error: null });
+        }
+      }
       this.props.onSubmit(text);
       if (this.props.clearOnSubmit) {
         this.setState({ text: "" });
@@ -43,7 +53,11 @@ export default class TodoTextInput extends Component {
             onBlur={this.handleBlur}
             onChange={this.handleChange}
             onKeyDown={this.handleSubmit}
-            className="input is-medium"
+            className={classnames({
+              input: true,
+              "is-medium": true,
+              "is-danger": this.state.error !== null
+            })}
             type="text"
             autoFocus={true}
             placeholder={this.props.placeholder}
@@ -52,6 +66,9 @@ export default class TodoTextInput extends Component {
             <i className="fa fa-user" />
           </span>
         </p>
+        {this.state.error ? (
+          <p className="help is-danger">{this.state.error}</p>
+        ) : null}
       </div>
     );
   }

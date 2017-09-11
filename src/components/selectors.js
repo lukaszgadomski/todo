@@ -28,6 +28,17 @@ export const getSelectedTodosSelector = createSelector(
   (groupId, groupsById) => (groupId ? groupsById[groupId] : null)
 );
 
+export const getSelectedGroup = createSelector(
+  getGroups,
+  getSelectedGroupId,
+  (groups, groupId) => {
+    if (!groupId) {
+      return null;
+    }
+    return groups.find(group => group.id === groupId);
+  }
+);
+
 //returns todos list: selected, filtered by search and status
 export const getVisibleTodos = createSelector(
   getSelectedTodosSelector,
@@ -45,7 +56,7 @@ export const getVisibleTodos = createSelector(
     return todos.filter(todo => {
       return (
         search(todo) &&
-        (filterType === filterTodoType.ALL || filterType === todo.status)
+        (filterType === filterTodoType.ALL || filterType === todo.state)
       );
     });
   }
