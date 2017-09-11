@@ -5,6 +5,7 @@ This is example of lists of todo list
 This project use redux, reselect for state management.
 
 To install dependencies : npm install
+
 To run : npm start
 
 
